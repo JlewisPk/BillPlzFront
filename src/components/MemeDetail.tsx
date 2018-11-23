@@ -2,8 +2,9 @@ import * as React from "react";
 
 interface IProps {
     billProduced: any[],
+    clearBill: any,
     currentItem: any,
-    selectNewItems: any
+    selectNewItems: any,
 }
 
 interface IState {
@@ -48,7 +49,7 @@ export default class MemeDetail extends React.Component<IProps, IState> {
                         <div className="bill-bottom-line">
                             <label style={{position:'absolute', paddingTop: 8, left:50, color:'#ffffff', fontWeight:900, fontSize:20, }}>Total : </label>
                             <label style={{textAlign:'left', color:'red', fontWeight:900, fontSize:25, paddingLeft:120, paddingRight:120, paddingTop:3, alignContent:'flex-start'}}>$ {total}</label>
-                            <label style={{position:'absolute', right:50, backgroundColor:'#60c1b9', borderRadius:10, marginTop:2, padding:7, paddingLeft:28, paddingRight:28, color:'#ffffff', fontWeight:900, fontSize:20, }}> PAY </label>
+                            <label onClick={this.props.clearBill} style={{position:'absolute', right:50, backgroundColor:'#60c1b9', borderRadius:10, marginTop:2, padding:7, paddingLeft:28, paddingRight:28, color:'#ffffff', fontWeight:900, fontSize:20, }}> PAY </label>
                             </div>
                     }   
                 </div>
@@ -56,6 +57,10 @@ export default class MemeDetail extends React.Component<IProps, IState> {
             </div>
 		);
     }
+    // private clearBill = () => {
+	// 	this.props.billProduced.splice(0,this.props.billProduced.length)
+	// 	location.reload()
+    // }
     private createList(){
         const table:any[] = []
         const itemList = this.props.billProduced;

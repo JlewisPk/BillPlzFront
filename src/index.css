@@ -20,7 +20,12 @@ body{
   position: relative;
   padding-top: 10px;
 }
-
+.mobile-version {
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+}
 /* Selected Meme */
 .meme-wrapper {
   padding-top:20px;
@@ -85,15 +90,20 @@ body{
 }
 
 .btn-action:hover {
-  background-color: #d18c1b;
-  border-color: #d18c1b;
+  background-color: #71e8de;
+  border-color: #71e8de;
 }
 
 .btn-add {
   position: absolute;
   right: 0px;
 }
-
+.icon-color {
+  color: #60c1b9;
+}
+.icon-color:hover {
+  color: red;
+}
 /* Meme List */
 .meme-list-wrapper {
   padding-top:20px;
@@ -102,13 +112,14 @@ body{
 .meme-list-table {
   margin-top: 20px;
   height: calc(100vh - 250px);
+  width: 0 auto;
   overflow-y: scroll;
   cursor: default;
 }
 
 .search-button:hover {
-  background-color: #d18c1b;
-  border-color: #d18c1b;
+  background-color: #71e8de;
+  border-color: #71e8de;
   color: white;
 }
 .extra-adding {
@@ -189,4 +200,7 @@ body{
   margin-top: 15px;
   background-color: #cecece;
   border-radius: 10px;
+}
+.text-warning {
+  color: red !important;
 }
