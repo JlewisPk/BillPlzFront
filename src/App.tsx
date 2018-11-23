@@ -58,9 +58,14 @@ class App extends React.Component<{}, IState> {
 		this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
 		this.fetchItems("")
 	}
+	public componentDidMount() {
 
+		this.setState({width:window.innerWidth, height:window.innerHeight})
+	}
 	public render() {
 		const { open, edit } = this.state;
+		// this.state.width = window.innerWidth;
+		// this.state.height = window.innerHeight;
 		window.addEventListener('resize', this.updateWindowDimensions);
 		
 		return (
@@ -68,45 +73,48 @@ class App extends React.Component<{}, IState> {
 			<div className="header-wrapper">
 				<div className="container header">
 					{edit? 
-					this.state.width>950?
-					null
-					:
-					<div className="btn btn-primary btn-action extra-adding2" onClick={this.toggleEdit}>Cancel</div>
+						this.state.width>950?
+						null
 						:
-					this.state.width>950?
-					null
-					:
-					<div className="btn btn-primary btn-action extra-adding2" onClick={this.toggleEdit}>Edit</div>
+						<div className="btn btn-primary btn-action extra-adding2" onClick={this.toggleEdit}>Cancel</div>
+							:
+						this.state.width>950?
+						null
+						:
+						<div className="btn btn-primary btn-action extra-adding2" onClick={this.toggleEdit}>Edit</div>
 					}
 					<img src={lewisBillLogo} height='40'/>
 					&nbsp; Lewis's Billing Helper! &nbsp;
 					{edit? 
-					this.state.width>950?
-					<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Cancel Edit</div>
-					:
-					null
+						this.state.width>950?
+						<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Cancel Edit</div>
 						:
-					this.state.width>950?
-					<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Edit List</div>
-					:
-					null
+						null
+							:
+						this.state.width>950?
+						<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Edit List</div>
+						:
+						null
 					}
 					{this.state.width>950?
-					<div className="btn btn-primary btn-action btn-add" onClick={this.onOpenModal}>Add Item</div>
-					:
-					<div className="btn btn-primary btn-action btn-add" onClick={this.onOpenModal}>Add</div>
+						<div className="btn btn-primary btn-action btn-add" onClick={this.onOpenModal}>Add Item</div>
+						:
+						<div className="btn btn-primary btn-action btn-add" onClick={this.onOpenModal}>Add</div>
 					}
 				</div>
 			</div>
 			{(!this.state.authenticated) ?
 			<Modal open={!this.state.authenticated} onClose={this.authenticate} closeOnOverlayClick={false} showCloseIcon={false} center={true}>
+				<div>
 				<Webcam
-					style={{width:'90%', height:'90%'}}
+					className="webcam"
+					style={{width:'100%', height:'100%', }}
 					screenshotFormat="image/jpeg"
 					ref={this.state.refCamera}
 				/>
-				<div className="row nav-row">
+				<div className="row nav-row login">
 					<div className="btn btn-primary bottom-button" onClick={this.authenticate}>Login</div>
+				</div>
 				</div>
 			</Modal> 
 			: 

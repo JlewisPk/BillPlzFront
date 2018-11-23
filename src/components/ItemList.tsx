@@ -39,8 +39,8 @@ export default class ItemList extends React.Component<IProps, IState> {
 	public render() {
         const { open } = this.state;
 		return (
-			<div className="container meme-list-wrapper">
-                <div className="row meme-list-heading">
+			<div className="container item-list-wrapper">
+                <div className="row">
                     <div className="input-group">
                         <input type="text" onKeyPress={this.handleKeyPress} id="search-item-textbox" className="form-control" placeholder="Search By Item Name" />
                         <div className="input-group-append">
@@ -49,7 +49,7 @@ export default class ItemList extends React.Component<IProps, IState> {
                         </div>
                     </div>  
                 </div>
-                <div className="row meme-list-table">
+                <div className="row item-list-table">
                     <table className="table table-striped">
                         <tbody>
                             {this.createTable()}

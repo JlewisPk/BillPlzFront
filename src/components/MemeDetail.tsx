@@ -29,13 +29,13 @@ export default class MemeDetail extends React.Component<IProps, IState> {
             total = total + subTotal
         })
 		return (
-			<div className="container meme-wrapper">
-                <div style={{alignContent:'center', marginBottom:32}} className="row meme-heading">
+			<div className="container item-wrapper">
+                <div style={{alignContent:'center', marginBottom:32}} className="row item-heading">
                     <b style={{alignContent:'center'}}>Bill</b>
                     {/* <b>{billProduced[0]!==undefined?billProduced[0].itemName:null}</b>&nbsp; ({billProduced[0]!==undefined?billProduced[0].itemCount:null}) */}
                 </div>
                 
-                <div className="row meme-list-table">
+                <div className="row item-list-table">
                     <table className="table table-striped">
                         <tbody>
                         {billProduced.length===0?<div className="before-start-billing">Add Item From the list on the right!</div>:
@@ -44,7 +44,7 @@ export default class MemeDetail extends React.Component<IProps, IState> {
                         </tbody>
                     </table>
                 </div>
-                <div className="row meme-date">
+                <div className="row item-total-container">
                     {billProduced.length===0?null:
                         <div className="bill-bottom-line">
                             <label style={{position:'absolute', paddingTop: 8, left:50, color:'#ffffff', fontWeight:900, fontSize:20, }}>Total : </label>
