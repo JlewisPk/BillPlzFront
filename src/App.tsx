@@ -12,12 +12,14 @@ interface IState {
 	billProduced: any[],
 	currentItem: any,
 	edit: boolean,
+	height: any,
 	items: any[],
 	open: boolean,
 	predictionResult: any,
 	refCamera: any
 	uploadFileList: any,
 	warning: any,
+	width: any,
 }
 
 class App extends React.Component<{}, IState> {
@@ -37,12 +39,14 @@ class App extends React.Component<{}, IState> {
 				"width": "700"
 			  },
 			edit: false,
+			height: 0,
 			items: [],
 			open: false,
 			predictionResult: null,
 			refCamera: React.createRef(),
 			uploadFileList: null,
 			warning: '',
+			width: 0,
 		}     	
 		this.selectNewItems = this.selectNewItems.bind(this)
 		this.fetchItems = this.fetchItems.bind(this)
@@ -51,27 +55,53 @@ class App extends React.Component<{}, IState> {
 		this.clearBill = this.clearBill.bind(this)
 		this.authenticate = this.authenticate.bind(this)
 		this.getFaceRecognitionResult = this.getFaceRecognitionResult.bind(this)
+		this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
 		this.fetchItems("")
 	}
 
 	public render() {
 		const { open, edit } = this.state;
+		window.addEventListener('resize', this.updateWindowDimensions);
+		
 		return (
 		<div>
 			<div className="header-wrapper">
 				<div className="container header">
-					<img src={lewisBillLogo} height='40'/>&nbsp; Lewis's Billing Helper! &nbsp;
 					{edit? 
-					<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Cancel Edit</div>
+					this.state.width>950?
+					null
+					:
+					<div className="btn btn-primary btn-action extra-adding2" onClick={this.toggleEdit}>Cancel</div>
 						:
-					<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Edit List</div>
+					this.state.width>950?
+					null
+					:
+					<div className="btn btn-primary btn-action extra-adding2" onClick={this.toggleEdit}>Edit</div>
 					}
+					<img src={lewisBillLogo} height='40'/>
+					&nbsp; Lewis's Billing Helper! &nbsp;
+					{edit? 
+					this.state.width>950?
+					<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Cancel Edit</div>
+					:
+					null
+						:
+					this.state.width>950?
+					<div className="btn btn-primary btn-action btn-add extra-adding" onClick={this.toggleEdit}>Edit List</div>
+					:
+					null
+					}
+					{this.state.width>950?
 					<div className="btn btn-primary btn-action btn-add" onClick={this.onOpenModal}>Add Item</div>
+					:
+					<div className="btn btn-primary btn-action btn-add" onClick={this.onOpenModal}>Add</div>
+					}
 				</div>
 			</div>
 			{(!this.state.authenticated) ?
 			<Modal open={!this.state.authenticated} onClose={this.authenticate} closeOnOverlayClick={false} showCloseIcon={false} center={true}>
 				<Webcam
+					style={{width:'90%', height:'90%'}}
 					screenshotFormat="image/jpeg"
 					ref={this.state.refCamera}
 				/>
@@ -81,16 +111,46 @@ class App extends React.Component<{}, IState> {
 			</Modal> 
 			: 
 			<div>
-			<div className="container">
-			<div className="row">
-				<div className="col-7">
-					<MemeDetail currentItem={this.state.currentItem} selectNewItems={this.selectNewItems} clearBill={this.clearBill} billProduced={this.state.billProduced} />
+				{this.state.width>950? 
+				<div className="container">
+					{this.state.width>950?
+						<div className="row">
+							<div className="col-7">
+								<MemeDetail currentItem={this.state.currentItem} selectNewItems={this.selectNewItems} clearBill={this.clearBill} billProduced={this.state.billProduced} />
+							</div>
+							<div className="col-5">
+								<ItemList billProduced={this.state.billProduced} edit={this.state.edit} items={this.state.items} selectNewItems={this.selectNewItems} searchByName={this.fetchItems}/>
+							</div>
+						</div>
+					:
+						<div className="row center">
+							<div className="col-25 center">
+								<ItemList billProduced={this.state.billProduced} edit={this.state.edit} items={this.state.items} selectNewItems={this.selectNewItems} searchByName={this.fetchItems}/>
+							</div>
+						</div>
+					}
 				</div>
-				<div className="col-5">
-					<ItemList billProduced={this.state.billProduced} edit={this.state.edit} items={this.state.items} selectNewItems={this.selectNewItems} searchByName={this.fetchItems}/>
+				:
+				<div className="container pad-remover">
+					{this.state.width>950?
+						<div className="row">
+							<div className="col-7">
+								<MemeDetail currentItem={this.state.currentItem} selectNewItems={this.selectNewItems} clearBill={this.clearBill} billProduced={this.state.billProduced} />
+							</div>
+							<div className="col-5">
+								<ItemList billProduced={this.state.billProduced} edit={this.state.edit} items={this.state.items} selectNewItems={this.selectNewItems} searchByName={this.fetchItems}/>
+							</div>
+						</div>
+					:
+						<div className="row center">
+							<div className="col-25 center">
+								<ItemList billProduced={this.state.billProduced} edit={this.state.edit} items={this.state.items} selectNewItems={this.selectNewItems} searchByName={this.fetchItems}/>
+							</div>
+						</div>
+					}
+				
 				</div>
-			</div>
-		</div>
+				}
 		<Modal open={open} onClose={this.onCloseModal}>
 			<form>
 				<div className="form-group">
@@ -117,6 +177,9 @@ class App extends React.Component<{}, IState> {
 		</div>
 		);
 	}
+	private updateWindowDimensions() {
+		this.setState({ width: window.innerWidth, height: window.innerHeight });
+	  }
 	// Call custom vision model
 private getFaceRecognitionResult(image: string) {
 	const url = "https://southcentralus.api.cognitive.microsoft.com/customvision/v2.0/Prediction/1f3378e0-8e35-43d1-8d15-866469694af6/image?iterationId=503c9065-d287-4488-b443-02d720f024ed"

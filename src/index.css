@@ -125,6 +125,15 @@ body{
 .extra-adding {
   margin-right: 100px;
 }
+
+.extra-adding2 {
+  position: absolute;
+  left: 10px;
+}
+.pad-remover {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 .bill-row {
   align-items: left;
   justify-content: left;
@@ -203,4 +212,13 @@ body{
 }
 .text-warning {
   color: red !important;
+}
+.center {
+  justify-content: center;
+  align-content: center;
+
+}
+.align-left {
+  justify-content: left;
+  align-content: left;
 }

@@ -77,6 +77,7 @@ export default class ItemList extends React.Component<IProps, IState> {
             </div>
 		);
     }
+    
     private async searchTagByVoice() {
         const mediaConstraints = {
             audio: true,
