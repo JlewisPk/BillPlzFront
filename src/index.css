@@ -41,21 +41,6 @@ body{
   font-weight: normal;
   font-size: 18px;
 }
-
-.meme-img {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #eeeeee;
-  overflow: hidden;
-}
-
-.meme-img img {
-  max-height: calc(100vh - 400px);
-  width: 100%;
-}
-
 .item-total-container {
   display: flex;
   align-items: left;
